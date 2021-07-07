@@ -31,6 +31,8 @@ public class RegisterServlet {
         else {
             model.put("registrationSucceeded", "Registration completed!");
         }
+        // add new user into database
+        security.addNewUser(id, username, password, email);
         // go to login page
     }
 

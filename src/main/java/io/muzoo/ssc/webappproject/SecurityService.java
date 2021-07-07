@@ -57,4 +57,8 @@ public class SecurityService {
         }
     }
 
+    public void addNewUser(int id, String username, String password, String email) {
+        userRepo.addNewUser(id, username, password, email);
+    }
+
 }

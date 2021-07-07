@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     UserEntity findById(int id);
 
+    void addNewUser(int id, String username, String password, String email);
+
 }
