@@ -1,7 +1,10 @@
 <html>
     <body>
         <h2>Login</h2>
-        <p>${error}</p>
+        <p>
+            ${error}
+            ${registrationSucceeded}
+        </p>
 
         <form action="/login" method="post">
             Username:<br/>
@@ -13,7 +16,7 @@
             <input type="submit" value="Submit">
         </form>
 
-        <form method="post">
+        <form action="/register" method="post">
         <button type="submit" name="register">Register</button>
         </form>
 
