@@ -28,4 +28,37 @@ public class SecurityService {
         }
     }
 
+    public boolean usernameExist(String username) {
+        UserEntity user = userRepo.findByUsername(username);
+        if (user != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean emailExist(String email) {
+        UserEntity user = userRepo.findByEmail(email);
+        if (user != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean idExist(int id) {
+        UserEntity user = userRepo.findById(id);
+        if (user != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void addNewUser(int id, String username, String password, String email) {
+        userRepo.addNewUser(id, username, password, email);
+    }
+
 }
