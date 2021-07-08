@@ -11,8 +11,6 @@ public class SecurityService {
     @Autowired
     private UserRepository userRepo;
 
-
-
     public boolean isAuthorized(HttpServletRequest request) throws SQLException, ClassNotFoundException {
         String username = (String) request.getSession().getAttribute("username");
         return (username != null);

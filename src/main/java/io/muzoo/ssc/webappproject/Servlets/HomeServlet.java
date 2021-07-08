@@ -5,6 +5,7 @@ import io.muzoo.ssc.webappproject.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +22,7 @@ public class HomeServlet {
 
     SecurityService security;
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/home")
     public String getHome() {
         return "home.jsp";
     }

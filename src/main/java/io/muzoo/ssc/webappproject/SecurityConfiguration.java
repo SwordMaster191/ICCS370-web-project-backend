@@ -9,16 +9,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure (HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/home").authenticated()
+        http
+                .csrf().disable()
+                .authorizeRequests()
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/")
+                .loginPage("/login.jsp")
+                .defaultSuccessUrl("/home.jsp")
                 .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/").permitAll();
+                .logout().logoutSuccessUrl("/login.jsp").permitAll();
     }
-
 }

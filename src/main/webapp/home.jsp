@@ -50,6 +50,8 @@ localhost:8080/home
             <td> <%= resultSet.getString("email")%> </td>
     </tr>
 
+    <br><a href="/logout">logout</a>
+
     <%  }
             resultSet.close();
             statement.close();
