@@ -1,12 +1,17 @@
+/*
+
 package io.muzoo.ssc.webappproject.Servlets;
 
 import io.muzoo.ssc.webappproject.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Controller
 public class RegisterServlet {
 
     @Autowired
@@ -15,7 +20,7 @@ public class RegisterServlet {
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String getRegister(ModelMap model) { return "register.jsp"; }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @PostMapping(value = "/register")
     public void postRegister(ModelMap model, @RequestParam String username, @RequestParam String password,
                                @RequestParam String email, @RequestParam int id) {
         if (security.idExist(id)){
@@ -37,3 +42,5 @@ public class RegisterServlet {
     }
 
 }
+
+*/

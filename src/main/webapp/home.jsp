@@ -2,6 +2,8 @@
 <%@ page import="java.io.*,java.util.*"%>
 <%@ page import="java.sql.*"%>
 
+localhost:8080/home
+
 <html>
 
 <head>
@@ -26,7 +28,7 @@
 
     <%
         try {
-            String url = "jdbc:mysql://webappproject.culiz6fsdfka.ap-southeast-1.rds.amazonaws.com:3306/UserDatabase";
+            String url = "jdbc:mysql://webappproject.culiz6fsdfka.ap-southeast-1.rds.amazonaws.com:3306/UserDatabase?autoReconnect=true&useSSL=false";
             String username = "admin";
             String password = "rootroot";
             Integer num = 0;
