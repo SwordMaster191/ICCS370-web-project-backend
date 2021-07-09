@@ -1,6 +1,8 @@
 package io.muzoo.ssc.project.backend.config;
 
+import io.muzoo.ssc.project.backend.SimpleResponseDTO;
 import io.muzoo.ssc.project.backend.auth.OurUserDetailsService;
+import io.muzoo.ssc.project.backend.util.AjaxUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,15 +65,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return ourUserDetailsService;
 	}
 
+	//EP7
 	class JsonHttp403ForbiddenEntryPoint implements AuthenticationEntryPoint{
 
 		@Override
-		public void commence(HttpServletRequest httpServletRequest,
-							 HttpServletResponse httpServletResponse,
+		public void commence(HttpServletRequest request,
+							 HttpServletResponse response,
 							 AuthenticationException e) throws IOException, ServletException {
 			//Output JSON msg
-			//Println for now
-			httpServletResponse.getWriter().println("You are not allowed to access this page.");
+			String ajaxJson = AjaxUtils.convertToString(SimpleResponseDTO
+					.builder()
+					.success(true)
+					.message("Forbidden.")
+					.build());
+
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json");
+			response.getWriter().println(ajaxJson);
 
 		}
 	}
