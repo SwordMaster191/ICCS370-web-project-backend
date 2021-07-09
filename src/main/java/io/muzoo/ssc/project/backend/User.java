@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name= "tbl_user")//TODO: Link to correct name. Hostname changeable by going to java/resources/application.properties
-//Will also need to configure Data source in IntelliJ
+//Will also need to configure Data source in IntelliJ (It's in ajarn's EP3)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +22,6 @@ public class User {
 
     private String password;
 
-    private String group;
+    private String role;
+
 }
