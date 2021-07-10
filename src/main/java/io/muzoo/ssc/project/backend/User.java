@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name= "tbl_user")//TODO: Link to correct name. Hostname changeable by going to java/resources/application.properties
-//Will also need to configure Data source in IntelliJ (It's in ajarn's EP3)
+@Table(name= "tbl_user")
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
