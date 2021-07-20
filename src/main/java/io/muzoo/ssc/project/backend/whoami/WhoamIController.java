@@ -13,6 +13,7 @@ public class WhoamIController {
 
     @Autowired
     private UserRepository userRepository;
+
     @GetMapping("/api/whoami")
     public WhoamiDTO whoami(){
         try{

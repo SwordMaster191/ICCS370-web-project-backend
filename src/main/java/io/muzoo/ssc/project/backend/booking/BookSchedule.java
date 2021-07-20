@@ -4,10 +4,15 @@ import io.muzoo.ssc.project.backend.Book;
 import io.muzoo.ssc.project.backend.BookRepository;
 import io.muzoo.ssc.project.backend.SimpleResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -20,7 +25,15 @@ public class BookSchedule {
         return bookRepository.findByUsername(username);
     }
 
-    public SimpleResponseDTO reserveSchedule(String username, Time startTime, Time endTime, Date date) {
+    @PostMapping("/api/book")
+    public SimpleResponseDTO reserveSchedule(HttpServletRequest request) throws ParseException {
+        String username = request.getParameter("username");
+        SimpleDateFormat startTimeFormat = new SimpleDateFormat("hh:mm:ss");
+        Time startTime = (Time) startTimeFormat.parse(request.getParameter("startTime"));
+        SimpleDateFormat endTimeFormat = new SimpleDateFormat("hh:mm:ss");
+        Time endTime = (Time) endTimeFormat.parse(request.getParameter("endTime"));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = (Date) dateFormat.parse(request.getParameter("date"));
         if (isReservable(startTime, endTime, date)) {
             Book reservation = new Book();
             reservation.setDate(date);
@@ -41,8 +54,13 @@ public class BookSchedule {
                 .build();
     }
 
-    public void deleteReservation(Time startTime, Time endTime, Date date) {
+    public SimpleResponseDTO deleteReservation(Time startTime, Time endTime, Date date) {
         bookRepository.deleteByDateAndStartTimeAndEndTime(date, startTime, endTime);
+        return SimpleResponseDTO
+                .builder()
+                .success(true)
+                .message("Reservation deleted.")
+                .build();
     }
 
     public List<Book> getCurrentReservations(String username) {
