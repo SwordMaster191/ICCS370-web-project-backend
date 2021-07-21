@@ -21,16 +21,13 @@ public class Book {
     @Column(unique = true)
     private String username;
 
-    @Column(name = "startTime")
-//    @Temporal(TemporalType.TIME)
+    @Column(name = "start_time")
     private Time startTime;
 
-    @Column(name = "endTime")
-//    @Temporal(TemporalType.TIME)
+    @Column(name = "end_time")
     private Time endTime;
 
     @Column(name = "date")
-//    @Temporal(TemporalType.DATE)
     private Date date;
 
 }

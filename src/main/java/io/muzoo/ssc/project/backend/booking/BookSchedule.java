@@ -28,12 +28,11 @@ public class BookSchedule {
     @PostMapping("/api/book")
     public SimpleResponseDTO reserveSchedule(HttpServletRequest request) throws ParseException {
         String username = request.getParameter("username");
-        SimpleDateFormat startTimeFormat = new SimpleDateFormat("hh:mm:ss");
-        Time startTime = (Time) startTimeFormat.parse(request.getParameter("startTime"));
-        SimpleDateFormat endTimeFormat = new SimpleDateFormat("hh:mm:ss");
-        Time endTime = (Time) endTimeFormat.parse(request.getParameter("endTime"));
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        Time startTime = new Time(timeFormat.parse(request.getParameter("startTime")).getTime());
+        Time endTime = new Time(timeFormat.parse(request.getParameter("endTime")).getTime());
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = (Date) dateFormat.parse(request.getParameter("date"));
+        Date date = new Date(dateFormat.parse(request.getParameter("date")).getTime());
         if (isReservable(startTime, endTime, date)) {
             Book reservation = new Book();
             reservation.setDate(date);
@@ -50,7 +49,7 @@ public class BookSchedule {
         return SimpleResponseDTO
                 .builder()
                 .success(false)
-                .message("Not reservable.")
+                .message("Reservation overlaps with existing current reservations")
                 .build();
     }
 
@@ -69,8 +68,8 @@ public class BookSchedule {
 
     public boolean isReservable(Time startTime, Time endTime, Date date) {
         /*
-        Two schedule overlapped if start of first period is between start and
-        end of second or if start of second period is between start and end of first
+        Two schedule overlapped if start of first schedule is between start and
+        end of second or if start of second schedule is between start and end of first
          */
         Book overlapReservationOne = bookRepository.findFirstByDateAndStartTimeBetween(date, startTime, endTime);
         if (overlapReservationOne != null) { // can't reserve
