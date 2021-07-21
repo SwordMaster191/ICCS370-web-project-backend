@@ -5,6 +5,7 @@ import io.muzoo.ssc.project.backend.User;
 import io.muzoo.ssc.project.backend.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,9 @@ public class AuthenticationController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //EP5 @17:00 minute mark
     @GetMapping("/api/test")
@@ -31,7 +35,7 @@ public class AuthenticationController {
         if (userRepository.findFirstByUsername(username)==null) {
             User newUser = new User();
             newUser.setUsername(username);
-            newUser.setPassword(password);
+            newUser.setPassword(passwordEncoder.encode(password));
             newUser.setRole("USER");
             userRepository.save(newUser);
             return SimpleResponseDTO.builder()
