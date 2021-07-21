@@ -4,11 +4,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 
+@Transactional
 @Repository
 public interface BookRepository extends JpaRepository<Book,Long> {
 
@@ -19,8 +21,6 @@ public interface BookRepository extends JpaRepository<Book,Long> {
 //            if exist cannot reserve
 
     Book findFirstByDateAndStartTimeBetween(Date date, Time startTime, Time endTime);
-
-//    List<Book> findByDateAndStartTimeBetween(Date date, Time startTime, Time endTime);
 
     List<Book> findByDate(Date date);
 

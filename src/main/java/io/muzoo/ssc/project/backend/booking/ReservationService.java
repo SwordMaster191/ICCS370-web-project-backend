@@ -32,7 +32,12 @@ public class ReservationService {
     }
 
     @PostMapping("/api/deleteReservation")
-    public SimpleResponseDTO deleteReservation(Time startTime, Time endTime, Date date) {
+    public SimpleResponseDTO deleteReservation(HttpServletRequest request) throws ParseException {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        Time startTime = new Time(timeFormat.parse(request.getParameter("startTime")).getTime());
+        Time endTime = new Time(timeFormat.parse(request.getParameter("endTime")).getTime());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(dateFormat.parse(request.getParameter("date")).getTime());
         bookRepository.deleteByDateAndStartTimeAndEndTime(date, startTime, endTime);
         return SimpleResponseDTO
                 .builder()
@@ -74,8 +79,8 @@ public class ReservationService {
         Two schedule overlapped if start of first schedule is between start and
         end of second or if start of second schedule is between start and end of first
          */
-        Book overlapReservationOne = bookRepository.findFirstByDateAndStartTimeBetween(date, startTime, endTime);
-        if (overlapReservationOne != null) { // can't reserve
+        Book overlapReservations = bookRepository.findFirstByDateAndStartTimeBetween(date, startTime, endTime);
+        if (overlapReservations != null) { // can't reserve
             return false;
         }
         else {
@@ -89,5 +94,4 @@ public class ReservationService {
         }
     return true;
     }
-
 }
