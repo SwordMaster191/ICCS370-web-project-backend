@@ -80,19 +80,14 @@ public class ReservationService {
         }
         else {
             List<Book> reservationByDate = bookRepository.findByDate(date);
-            if (reservationByDate.size() == 0) {
-                return true;
-            }
-            else {
-                for (Book eachBook : reservationByDate) {
-                    if (eachBook.getStartTime().before(startTime) &&
-                    eachBook.getEndTime().after(startTime)) {
-                        return false;
-                    }
+            for (Book eachReservation : reservationByDate) {
+                if (eachReservation.getStartTime().before(startTime) &&
+                eachReservation.getEndTime().after(startTime)) {
+                    return false;
                 }
             }
         }
-        return true;
+    return true;
     }
 
 }
