@@ -16,13 +16,29 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
-public class BookSchedule {
+public class ReservationService {
 
     @Autowired
     private BookRepository bookRepository;
 
-    public List<Book> findReserveByUsername(String username) {
+    @GetMapping("/api/allReservations")
+    public List<Book> getAllReservations() {
+        return bookRepository.findAll();
+    }
+
+    @PostMapping("/api/currentUserReservations")
+    public List<Book> getCurrentUserReservationDetails(String username) {
         return bookRepository.findByUsername(username);
+    }
+
+    @PostMapping("/api/deleteReservation")
+    public SimpleResponseDTO deleteReservation(Time startTime, Time endTime, Date date) {
+        bookRepository.deleteByDateAndStartTimeAndEndTime(date, startTime, endTime);
+        return SimpleResponseDTO
+                .builder()
+                .success(true)
+                .message("Reservation deleted.")
+                .build();
     }
 
     @PostMapping("/api/book")
@@ -51,19 +67,6 @@ public class BookSchedule {
                 .success(false)
                 .message("Reservation overlaps with existing current reservations")
                 .build();
-    }
-
-    public SimpleResponseDTO deleteReservation(Time startTime, Time endTime, Date date) {
-        bookRepository.deleteByDateAndStartTimeAndEndTime(date, startTime, endTime);
-        return SimpleResponseDTO
-                .builder()
-                .success(true)
-                .message("Reservation deleted.")
-                .build();
-    }
-
-    public List<Book> getCurrentReservations(String username) {
-        return bookRepository.findByUsername(username);
     }
 
     public boolean isReservable(Time startTime, Time endTime, Date date) {
