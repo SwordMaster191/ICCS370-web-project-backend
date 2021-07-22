@@ -27,7 +27,8 @@ public class ReservationService {
     }
 
     @PostMapping("/api/currentUserReservations")
-    public List<Book> getCurrentUserReservationDetails(String username) {
+    public List<Book> getCurrentUserReservationDetails(HttpServletRequest request) {
+        String username = request.getParameter("username");
         return bookRepository.findByUsername(username);
     }
 
